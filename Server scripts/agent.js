@@ -5,16 +5,13 @@ const fetchData = async function() {
     const memData = await si.mem().catch(() => ' Memory Usage Not Available');
     const cpuData = await osUtil.cpu.usage().catch(() => 'CPU Usage Not Available');
     const hostName = await si.osInfo().catch(() => 'Hostname Not Available');
-    axios.post('http://localhost:3000/data/', {
+    axios.post('https://server-mon.herokuapp.com/data/', {
         cpuData,
         memData,
         hostName
     }).then(res =>
         console.log('request sent to user')).catch(err => {
         console.log('Error!');
-        /*
-                clearInterval(interval)});
-        */
     })
 };
 setInterval(fetchData,10000);
