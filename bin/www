@@ -27,9 +27,8 @@ io.set('origins', '*:*');
 io.on('connect',(socket)=>{
   console.log('emmiting data trough socket...');
   setInterval( dbService.emitFromDB.bind(null,socket),1000);
+
 });
-
-
 
 
 

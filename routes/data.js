@@ -8,8 +8,9 @@ const dbService = require('../monitor-data/data.service.db');
 
 router.post('/',(req,res)=>{
 dbService.inserTtoDB({availableMem:memLog(req.body.memData),
-cpuData:req.body.cpuData,
-name:req.body.hostName
+    cpuData:req.body.cpuData,
+    name:req.body.hostName,
+    time:req.body.time
 }).then(data=>res.send(data));
 });
 
