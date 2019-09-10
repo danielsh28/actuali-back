@@ -1,7 +1,6 @@
-const memLog = require('../routes/data.js').memLog;
+const util = require('../routes/data.js');
 
 //test
-test('doc inserted',()=>{
-   expect(memLog({used:100,total:100})).
-   toBe(1);
+test('doc inserted',()=> {
+   expect(util.memLog({used: 100000000000, total: 100000000000})).toBe(1);
 });
