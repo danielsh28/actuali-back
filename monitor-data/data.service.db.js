@@ -17,13 +17,17 @@ const Server = mongoose.model('Server',ServerSchema);
 
 
 module.exports.inserTtoDB = async function insertToDB(dataFromServer) {
-    Server.find({name:dataFromServer.name.hostname},(err,doc)=>{
+
+    let retVal = {};
+   await  Server.find({name:dataFromServer.name.hostname},(err,doc)=>{
         const resourcesData = {cpuUsage:dataFromServer.cpuData,
             availableMem:dataFromServer.availableMem, time:dataFromServer.time};
         if(doc.length!==0){
             Server.update({name:doc[0].name},{$push:{data: resourcesData}},(err,data)=>{
                 assert.strictEqual(null,err);
                 console.log('server ' + doc[0].name + ' has been updated');
+                retVal = data;
+
             });
            /* const docForUpdate = new Server(doc);
             docForUpdate.data.push(doc.data);
@@ -38,10 +42,14 @@ module.exports.inserTtoDB = async function insertToDB(dataFromServer) {
             newServerDoc.save((err,newServerDoc)=>{
                 assert.strictEqual(null,err);
                 newServerDoc.conformSave('new server name: ' + newServerDoc.name + ' document has been saved');
+                retVal = newServerDoc;
+
             });
         }
 
-    });
+   });
+
+   return retVal;
 
 }
 
@@ -57,7 +65,9 @@ module.exports.emitFromDB = function getServerData(socket){
         $group: {
             _id: "$name",
             cpuUsage: {$first: "$data.cpuUsage"},
-            availableMem: {$first: "$data.availableMem"}, time: {$first: "$data.time"}}}]).then(
+            availableMem: {$first: "$data.availableMem"}, time: {$first: "$data.time"}}},{
+        $project: {name:'$_id',cpuUsage:"$cpuUsage",availableMem:"$availableMem",time:"$time"}
+    }]).then(
                 (res) => {
                     //Server.find({$match:time:})
                     socket.emit('getData', res);

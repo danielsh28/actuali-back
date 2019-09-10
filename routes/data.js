@@ -14,7 +14,7 @@ dbService.inserTtoDB({availableMem:memLog(req.body.memData),
 }).then(data=>res.send(data));
 });
 
-module.exports = router;
+module.exports.dataRouter = router;
 
 
 const memLog = function (data) {
@@ -22,3 +22,5 @@ const memLog = function (data) {
     const total = Math.round(util.convertToDisplyedUnites(data.total));
     return used/total;
 };
+
+module.exports.memLog = memLog;

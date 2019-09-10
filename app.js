@@ -6,11 +6,11 @@ const logger = require('morgan');
 const cors  = require('cors');
 const usersRouter = require('./routes/users');
 const indexRouter = require('./routes/index');
+const dataRouter = require('./routes/data').dataRouter;
 const app = express();
 
 
 
-const dataRouter = require('./routes/data');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
