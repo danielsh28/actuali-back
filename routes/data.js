@@ -11,7 +11,7 @@ dbService.inserTtoDB({availableMem:memLog(req.body.memData),
     cpuData:req.body.cpuData,
     name:req.body.hostName,
     time:req.body.time
-}).then(data=>res.send(data));
+}).then(data=>res.send(data)).catch(err=>console.log(err));
 });
 
 module.exports.dataRouter = router;

@@ -6,10 +6,10 @@ const dbUrl = process.env.NODE_ENV === 'prod' ?'https://server-mon.herokuapp.com
 const fetchData = async function() {
     const memData = await si.mem().catch(() => ' Memory Usage Not Available');
     const cpuData = await osUtil.cpu.usage().catch(() => 'CPU Usage Not Available');
-    const hostName = await si.osInfo().catch(() => 'Hostname Not Available');
+    const info = await si.osInfo().catch(() => 'Hostname Not Available');
     axios.post(dbUrl,
         {
-            hostName:argv._[0]?argv._[0]:hostName,
+            hostName:argv._[0]?argv._[0]:info.hostname,
             cpuData,
             memData,
             time: new Date()

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const assert  = require('assert');
+const appConstants = require('../monitor-constants');
 const db = mongoose.connection;
 const  DataSchema = new mongoose.Schema({
     cpuUsage:Number,
@@ -17,9 +18,8 @@ const Server = mongoose.model('Server',ServerSchema);
 
 
 module.exports.inserTtoDB = async function insertToDB(dataFromServer) {
-
     let retVal = {};
-   await  Server.find({name:dataFromServer.name.hostname},(err,doc)=>{
+   await  Server.find({name:dataFromServer.name},(err,doc)=>{
         const resourcesData = {cpuUsage:dataFromServer.cpuData,
             availableMem:dataFromServer.availableMem, time:dataFromServer.time};
         if(doc.length!==0){
@@ -29,16 +29,9 @@ module.exports.inserTtoDB = async function insertToDB(dataFromServer) {
                 retVal = data;
 
             });
-           /* const docForUpdate = new Server(doc);
-            docForUpdate.data.push(doc.data);
-            docForUpdate.save((err,data)=>{
-                assert.strictEqual(null,err);
-                docForUpdate.conformSave('server ' + data.name + ' has been updated');
-            });*/
-
         }
         else{
-            const newServerDoc = new Server({name: dataFromServer.name.hostname,data:[resourcesData]});
+            const newServerDoc = new Server({name: dataFromServer.name,data:[resourcesData]});
             newServerDoc.save((err,newServerDoc)=>{
                 assert.strictEqual(null,err);
                 newServerDoc.conformSave('new server name: ' + newServerDoc.name + ' document has been saved');
@@ -51,10 +44,10 @@ module.exports.inserTtoDB = async function insertToDB(dataFromServer) {
 
    return retVal;
 
-}
+};
 
 module.exports.connectToDB = function conncetToDB(){
-    mongoose.connect('mongodb://localhost/serverDB',{useNewURLParser:true});
+    mongoose.connect(appConstants.DB_URL,{useNewURLParser:true});
     db.on('Error',()=> console.log('Error connect to database'));
     db.once('open',()=>console.log('Connection established successfully'));
 }
