@@ -5,4 +5,4 @@ module.exports.UNITS= {
 };
 
 module.exports.DB_URL= process.env.NODE_ENV === 'prod' ? 'mongodb+srv://danielShely:Maayan26@appcluster-ztphv.mongodb.net/' +
-    'test?retryWrites=true&w=majority': 'mongodb://localhost/serverDB';
+    'DEV_DB?retryWrites=true&w=majority': 'mongodb://localhost/serverDB';
