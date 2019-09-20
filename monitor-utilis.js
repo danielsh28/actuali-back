@@ -1,5 +1,4 @@
 const units = require('./monitor-constants').UNITS.MEM_UNITS;
-const hundredPercentage = require('./monitor-constants').UNITS.HUNDRED_PERCENTAGE;
 
 const  unitsMap = {
         kb: {
