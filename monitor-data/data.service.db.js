@@ -2,18 +2,17 @@ const mongoose = require('mongoose');
 const assert  = require('assert');
 const appConstants = require('../monitor-constants');
 const db = mongoose.connection;
-const  DataSchema = new mongoose.Schema({
-    cpuUsage:Number,
-    availableMem:Number,
-    time:Date
+const contentSchema= new mongoose.Schema({
+    time:Date,
+    content:String,
 });
-const ServerSchema = new mongoose.Schema({
-    name: String,
-    data: [DataSchema]
+const  resourceSchema = new mongoose.Schema({
+    resourceName: String,
+    data:[contentSchema]
 });
-ServerSchema.methods.conformSave = (log)=> console.log(log);
+resourceSchema.methods.conformSave = (log)=> console.log(log);
 
-const Server = mongoose.model('Server',ServerSchema);
+const Headline = mongoose.model('Headline',ServerSchema);
 
 
 

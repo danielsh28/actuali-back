@@ -1,30 +1,30 @@
-const osUtil= require('node-os-utils');
-const si = require('systeminformation');
+module.exports.fetchHeadlines =  function(){const apiConst = require('./api-constants');
 const axios = require('axios');
 const argv = require('minimist')(process.argv.slice(2));
-const dbUrl = argv.env === 'prod' ?'https://server-mon.herokuapp.com/data/':'http://localhost:3000/data' ;
-const fetchData = async function() {
-    const memData = await si.mem().catch(() => ' Memory Usage Not Available');
-    const cpuData = await osUtil.cpu.usage().catch(() => 'CPU Usage Not Available');
-    const info = await si.osInfo().catch(() => 'Hostname Not Available');
-    const hostName = argv.server?argv.server:info.hostname;
-    axios.post(dbUrl,
-        {
-            hostName,
-            cpuData,
-            memData,
-            time: new Date()
+const dbUrl = argv.type === 'prod' ?'https://server-mon.herokuapp.com/data/':'http://localhost:3000/data' ;
+const contentType= argv.type==null?apiConst.ISR_HEADLINES :argv.type;
+    const urlToGet = apiConst.BASE_API + contentType + apiConst.API_KEY;
+    const errFunc = err=>console.log(' error fetching from : '+ urlToGet + ": " +err.message);
+    axios.get(urlToGet).then(res => {
+            /*axios.post(dbUrl,res.data.articles).catch(errFunc);*/
+        console.log('status: ' + res.data.status);
+        handleHeadlinesFromApi(res.data.articles);
         }
-    ).then(res=>{
-        console.log(hostName+ ' info registerd in dataBase' );
-    }).catch(err => {
-        console.log('Error!');
-    })
+    ).catch(errFunc);
 };
-setInterval(fetchData,5000);
+//function create  array of resource and headline tuples
+function handleHeadlinesFromApi(articles){
+    const headlinesByResource = new Array(0);
+    articles.forEach(article=>headlinesByResource.push({
+        resourceName:article.source.name,
+        headline:article.title
+    }));
+    console.log(headlinesByResource);
+
+}
+module.exports.fetchHeadlines();
 
 
-/*
-const interval = setInterval(fetchData,2000);
-*/
+/*setInterval(fetchHeadLines,2000);*/
+
 
