@@ -2,51 +2,46 @@ const mongoose = require('mongoose');
 const assert  = require('assert');
 const appConstants = require('../monitor-constants');
 const db = mongoose.connection;
+let session =null;
+db.startSession().then(_session=>{
+    session = _session;
+});
+
 const contentSchema= new mongoose.Schema({
     time:Date,
     content:String,
 });
 const  resourceSchema = new mongoose.Schema({
     resourceName: String,
-    data:[contentSchema]
+    headlines:[contentSchema]
 });
 resourceSchema.methods.conformSave = (log)=> console.log(log);
-
-const Headline = mongoose.model('Headline',ServerSchema);
-
-
-
+const resource = mongoose.model('Resource', resourceSchema);
 module.exports.inserTtoDB = async function insertToDB(dataFromServer) {
-    let retVal = {};
-   await  Server.find({name:dataFromServer.name},(err,doc)=>{
-        const resourcesData = {cpuUsage:dataFromServer.cpuData,
-            availableMem:dataFromServer.availableMem, time:dataFromServer.time};
-        if(doc.length!==0){
-            Server.update({name:doc[0].name},{$push:{data: resourcesData}},(err,data)=>{
-                assert.strictEqual(null,err);
-                console.log('server ' + doc[0].name + ' has been updated');
-                retVal = data;
-
+dataFromServer.forEach(headline=>handleHeadlinesByResource(headline));
+}
+//function update exist resource document in a new content or creating a new one with a new resource
+ async function handleHeadlinesByResource(headline){
+       let retVal = null ;
+       resource.findOne({resourceName:headline.resourceName}).session(session).then( async (doc)=>{
+        const contentData = {time:headline.publishedAt,
+           content:headline.title};
+        if(doc!=null){
+            await resource.updateOne({resourceName:doc[0].resourceName},{$push:{headlines: contentData}}.session(session)).then(()=>{
+                resource.conformSave('resource ' + doc[0].resourceName +' updated');
             });
         }
         else{
-            const newServerDoc = new Server({name: dataFromServer.name,data:[resourcesData]});
-            newServerDoc.save((err,newServerDoc)=>{
-                assert.strictEqual(null,err);
-                newServerDoc.conformSave('new server name: ' + newServerDoc.name + ' document has been saved');
-                retVal = newServerDoc;
-
-            });
+            await session.startTransaction();
+            await resource.create([{resourceName: headline.resourceName,headlines:[contentData]}],{session:session})
+            session.commitTransaction();
+            ;
         }
-
    });
-
-   return retVal;
-
 };
 
 module.exports.connectToDB = function conncetToDB(){
-    mongoose.connect(appConstants.DB_URL,{useNewURLParser:true});
+    mongoose.connect('mongodb://localhost:27017/headlines',{useNewURLParser:true});
     db.on('Error',()=> console.log('Error connect to database'));
     db.once('open',()=>console.log('Connection established successfully'));
 }

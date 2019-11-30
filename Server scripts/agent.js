@@ -1,30 +1,32 @@
-module.exports.fetchHeadlines =  function(){const apiConst = require('./api-constants');
+module.exports.fetchHeadlines =   function(){
+const apiConst = require('./api-constants');
 const axios = require('axios');
 const argv = require('minimist')(process.argv.slice(2));
-const dbUrl = argv.type === 'prod' ?'https://server-mon.herokuapp.com/data/':'http://localhost:3000/data' ;
+const dbUrl = argv.type === 'prod' ?'https://server-mon.herokuapp.com/data/':'http://localhost:3000/newsapi/data' ;
 const contentType= argv.type==null?apiConst.ISR_HEADLINES :argv.type;
     const urlToGet = apiConst.BASE_API + contentType + apiConst.API_KEY;
     const errFunc = err=>console.log(' error fetching from : '+ urlToGet + ": " +err.message);
-    axios.get(urlToGet).then(res => {
+    axios.get(urlToGet).then(async res => {
             /*axios.post(dbUrl,res.data.articles).catch(errFunc);*/
         console.log('status: ' + res.data.status);
-        handleHeadlinesFromApi(res.data.articles);
+        axios.post(dbUrl,
+            handleHeadlinesFromApi(res.data.articles)).catch(err=>console.log(err.message));
         }
     ).catch(errFunc);
 };
 //function create  array of resource and headline tuples
 function handleHeadlinesFromApi(articles){
     const headlinesByResource = new Array(0);
-    articles.forEach(article=>headlinesByResource.push({
+    articles.filter(article=>article.source.name === 'Ynet').forEach(article=>headlinesByResource.push({
         resourceName:article.source.name,
-        headline:article.title
+        title:article.title,
+        publishedAt:article.publishedAt
     }));
-    console.log(headlinesByResource);
-
+    return headlinesByResource;
 }
+
+
 module.exports.fetchHeadlines();
-
-
 /*setInterval(fetchHeadLines,2000);*/
 
 
