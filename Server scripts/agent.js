@@ -1,5 +1,5 @@
 module.exports.fetchHeadlines = async function(){
-    const apiConst = require('./api-constants');
+    const apiConst = require('../monitor-constants.js');
     const axios = require('axios');
     const argv = require('minimist')(process.argv.slice(2));
     const dbUrl = argv.type === 'prod' ?'https://server-mon.herokuapp.com/data/':'http://localhost:3000/newsapi/data' ;
@@ -37,6 +37,8 @@ module.exports.fetchHeadlines();
 function buildResourceHeadlineFromApi(article,headlinesFromResource){
     const dataElement = {
         title:article.title,
+        url:article.url,
+        urlToImage:article.urlToImage,
         publishedAt:article.publishedAt
     };
     const resourceNameKey = article.source.name;

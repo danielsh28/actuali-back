@@ -2,14 +2,12 @@ const mongoose = require('mongoose');
 const assert = require('assert');
 const appConstants = require('../monitor-constants');
 const db = mongoose.connection;
-let session = null;
-db.startSession().then(_session => {
-    session = _session;
-});
 
 const contentSchema = new mongoose.Schema({
     publishedAt: Date,
     title: String,
+    url:String,
+    urlToImage:String
 });
 const resourceSchema = new mongoose.Schema({
     resourceName: String,
@@ -19,7 +17,10 @@ resourceSchema.methods.conformSave = (log) => console.log(log);
 const resourceModel = mongoose.model('Resource', resourceSchema);
 module.exports.inserTtoDB = async function insertToDB(dataFromServer) {
     const resultArray = Object.entries(dataFromServer);
-   resultArray.forEach(resourcResult=>handleHeadlinesByResource(resourcResult));
+    for(let i in resultArray){
+      await  handleHeadlinesByResource(resultArray[i])
+    }
+   //resultArray.forEach( function (resourceResult ){handleHeadlinesByResource(resourceResult)})
 };
 
 
@@ -37,10 +38,12 @@ module.exports.inserTtoDB = async function insertToDB(dataFromServer) {
                 ;
             }
         }).catch(error => console.log(error));
-    };
+    }
 
 module.exports.connectToDB = function connectToDB() {
-    mongoose.connect('mongodb://localhost:27017/headlines', {useNewURLParser: true});
+    mongoose.connect(appConstants.DB_URL, {useNewURLParser: true}).catch(
+        err=> console.log('connection failed : ' + err.message)
+    );
     db.on('Error', () => console.log('Error connect to database'));
     db.once('open', () => console.log('Connection established successfully'));
 };
