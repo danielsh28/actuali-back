@@ -14,7 +14,7 @@ const resourceSchema = new mongoose.Schema({
     headlines: [contentSchema]
 });
 resourceSchema.methods.conformSave = (log) => console.log(log);
-const resourceModel = mongoose.model('Resource', resourceSchema);
+const ResourceModel = mongoose.model('Resource', resourceSchema);
 module.exports.inserTtoDB = async function insertToDB(dataFromServer) {
     const resultArray = Object.entries(dataFromServer);
     for(let i in resultArray){
@@ -28,13 +28,13 @@ module.exports.inserTtoDB = async function insertToDB(dataFromServer) {
     async function handleHeadlinesByResource(resource) {
         const resourceName = resource[0];
         const headlinesFromResource = resource[1];
-        await resourceModel.findOne({resourceName: resourceName}, function (doc) {
+        await ResourceModel.findOne({resourceName: resourceName}, function (doc) {
             if (doc != null) {
-                resourceModel.updateOne({resourceName: doc.resourceName}, {$push: {headlines: headlinesFromResource}}.session(session)).then(() => {
-                    resourceModel.conformSave('resource ' + doc[0].resourceName + ' updated');
+                ResourceModel.updateOne({resourceName: doc.resourceName}, {$push: {headlines: headlinesFromResource}}.session(session)).then(() => {
+                    ResourceModel.conformSave('resource ' + doc[0].resourceName + ' updated');
                 });
             } else {
-                resourceModel.create({resourceName: resourceName, headlines: headlinesFromResource})
+                ResourceModel.create({resourceName: resourceName, headlines: headlinesFromResource})
                 ;
             }
         }).catch(error => console.log(error));
@@ -50,19 +50,7 @@ module.exports.connectToDB = function connectToDB() {
 
 
 module.exports.emitFromDB = function getServerData(socket) {
-    Server.aggregate([{$unwind: '$data'}, {$sort: {'data.time': -1}}, {
-        $group: {
-            _id: "$name",
-            cpuUsage: {$first: "$data.cpuUsage"},
-            availableMem: {$first: "$data.availableMem"}, time: {$first: "$data.time"}
-        }
-    }, {
-        $project: {name: '$_id', cpuUsage: "$cpuUsage", availableMem: "$availableMem", time: "$time"}
-    }]).then(
-        (res) => {
-            //Server.find({$match:time:})
-            socket.emit('getData', res);
-        }
-    ).catch(err => console.log(err));
+    ResourceModel.aggregate([{$match:{resourceName:'Walla.co.il'}},{$unwind:'$headlines'},
+        {$project:{'_id':0}}]).then((data=>console.log((data)))).catch(err => console.log(err));
 };
 
