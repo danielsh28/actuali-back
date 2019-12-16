@@ -49,8 +49,13 @@ module.exports.connectToDB = function connectToDB() {
 };
 
 
-module.exports.emitFromDB = function getServerData(socket) {
-    ResourceModel.aggregate([{$match:{resourceName:'Walla.co.il'}},{$unwind:'$headlines'},
-        {$project:{'_id':0}}]).then((data=>console.log((data)))).catch(err => console.log(err));
+module.exports.getNewsFromDB = async function getServerData() {
+    let datafromdB = ['non-initialized'];
+   await ResourceModel.aggregate([{$match:{resourceName:'Walla.co.il'}},{$unwind:'$headlines'},
+        {$project:{'_id':0}}]).
+    then(data=>datafromdB=data)
+        .catch(err => console.log(err));
+
+    return datafromdB;
 };
 
