@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 router.get('/',async (req,res)=>{
-  const data = await dbService.getNewsFromDB();
+ const data = await dbService.getNewsFromDB(req.query.resource);
  res.send(JSON.stringify(data));
 });
 

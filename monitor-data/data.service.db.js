@@ -49,13 +49,13 @@ module.exports.connectToDB = function connectToDB() {
 };
 
 
-module.exports.getNewsFromDB = async function getServerData() {
+module.exports.getNewsFromDB = async function getServerData(resource) {
     let datafromdB = ['non-initialized'];
-   await ResourceModel.aggregate([{$match:{resourceName:'Walla.co.il'}},{$unwind:'$headlines'},
-        {$project:{'_id':0}}]).
+   await ResourceModel.aggregate([{$match:{resourceName:resource}},
+        {$project:{'_id':0,'resourceName':0,'headlines._id':0,"__v":0}}]).
     then(data=>datafromdB=data)
         .catch(err => console.log(err));
 
-    return datafromdB;
+    return datafromdB[0];
 };
 
