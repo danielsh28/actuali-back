@@ -14,7 +14,7 @@ const dbService = require("../monitor-data/data.service.db");
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
 
 /**
@@ -23,12 +23,12 @@ app.set('port', port);
 
 const server = http.createServer(app);
 const io = require('socket.io')(server);
-io.set('origins', '*:*');
+/*io.set('origins', '*:*');
 io.on('connect',(socket)=>{
   console.log('emmiting data trough socket...');
   setInterval( dbService.getNewsFromDB.bind(null,socket),1000);
 
-});
+});*/
 
 
 
