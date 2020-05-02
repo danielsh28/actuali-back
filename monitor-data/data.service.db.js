@@ -1,59 +1,56 @@
 const mongoose = require('mongoose');
-const assert = require('assert');
-const appConstants = require('../monitor-constants');
-const db = mongoose.connection;
+const appConst = require('../monitor-constants');
+mongoose.connect(appConst.DB_URL, {useNewURLParser: true}).catch(
+    err=> console.log('connection failed : ' + err.message));
+    const db = mongoose.connection;
+    db.on('Error', () => console.log('Error connect to database'));
+    db.once('open', () => console.log('Connection established successfully'));
 
 const contentSchema = new mongoose.Schema({
     publishedAt: Date,
     title: String,
     url:String,
-    urlToImage:String
+    urlToImage:String,
+    resource:String
 });
 const resourceSchema = new mongoose.Schema({
-    resourceName: String,
+    category: String,
     headlines: [contentSchema]
 });
 resourceSchema.methods.conformSave = (log) => console.log(log);
 const ResourceModel = mongoose.model('Resource', resourceSchema);
-module.exports.inserTtoDB = async function insertToDB(dataFromServer) {
-    const resultArray = Object.entries(dataFromServer);
-    for(let i in resultArray){
-      await  handleHeadlinesByResource(resultArray[i])
-    }
-   //resultArray.forEach( function (resourceResult ){handleHeadlinesByResource(resourceResult)})
+
+module.exports.inserTtoDB = function insertToDB(dataFromServer) {
+         handleHeadlinesByResource(dataFromServer);
 };
 
 
 //function update exist resource document in a new content or creating a new one with a new resource
-    async function handleHeadlinesByResource(resource) {
-        const resourceName = resource[0];
-        const headlinesFromResource = resource[1];
-        await ResourceModel.findOne({resourceName: resourceName}, function (doc) {
+      function handleHeadlinesByResource(headlinesByCategory) {
+        const categoryElement = headlinesByCategory.category;
+        const headlinesFromCategory = headlinesByCategory.headlines;
+         ResourceModel.findOne({category: categoryElement}, function (doc) {
             if (doc != null) {
-                ResourceModel.updateOne({resourceName: doc.resourceName}, {$push: {headlines: headlinesFromResource}}.session(session)).then(() => {
-                    ResourceModel.conformSave('resource ' + doc[0].resourceName + ' updated');
+                ResourceModel.updateOne({category: doc.category}, {$push: {headlines: headlinesFromCategory}}).then(() => {
+                    ResourceModel.conformSave('category ' + doc[0].category + ' updated');
                 });
             } else {
-                ResourceModel.create({resourceName: resourceName, headlines: headlinesFromResource})
+                ResourceModel.create({category: categoryElement, headlines: headlinesFromCategory}).then(()=>{
+                    resourceSchema.methods.conformSave('category ' + categoryElement + ' created');
+                });
                 ;
             }
         }).catch(error => console.log(error));
     }
 
-module.exports.connectToDB = function connectToDB() {
-    mongoose.connect(appConstants.DB_URL, {useNewURLParser: true}).catch(
-        err=> console.log('connection failed : ' + err.message)
-    );
-    db.on('Error', () => console.log('Error connect to database'));
-    db.once('open', () => console.log('Connection established successfully'));
-};
 
 
 module.exports.getNewsFromDB = async function getServerData(resource) {
     let datafromdB = ['non-initialized'];
    await ResourceModel.aggregate
    ([{$match:{resourceName:new RegExp('.+' + resource + '.+')}},{$unwind:'$headlines'},{$sort:{'headlines.publishedAt':-1}},
-       {$group:{_id:'$resourceName',title:{$first:'$headlines.title'},publishedAt:{$fitst:'$headlines.publishedAt'}}}]).
+       {$group:{_id:'$resourceName',title:{$first:'$headlines.title'},publishedAt:{$first:'$headlines.publishedAt'},
+           urlToImage:{$first:'$headlines.urlToImage'}}}]).
     then(data=>datafromdB=data)
         .catch(err => console.log(err));
 

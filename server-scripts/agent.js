@@ -1,0 +1,44 @@
+require('dotenv').config();
+const dataService = require('../monitor-data/data.service.db');
+const apiConst = require('../monitor-constants.js');
+const axios = require('axios');
+const argv = require('minimist')(process.argv.slice(2));
+const errFunc = err => console.log(' error fetching from : ' + urlToGet + ": " + err.message);
+
+
+(function getDataFromAPI() {
+    Object.values(apiConst.categories).forEach(category=> getDataByCategory(category));
+})();
+
+async function getDataByCategory(category) {
+    const query =`${apiConst.ISR_HEADLINES}&${apiConst.CATEGORY}=${category}`;
+    const urlToGet = apiConst.BASE_API + query + apiConst.API_KEY ;
+    const res = await axios.get(urlToGet);
+    const apiToSend = handleHeadlinesFromApi(res.data.articles,category);
+    dataService.inserTtoDB(apiToSend);
+}
+
+//function create  array of resource and headline tuples
+function handleHeadlinesFromApi(articles,category) {
+    const headlinesFromResource = [];
+    articles.map(article => buildCategoryHeadlineFromApi(category, article, headlinesFromResource));
+
+    return {
+        category,
+        headlines:headlinesFromResource
+    }
+}
+/*setInterval(fetchHeadLines,2000);*/
+
+function buildCategoryHeadlineFromApi(category,article, headlinesByCategory) {
+    const dataElement = {
+        title: article.title,
+        url: article.url,
+        urlToImage: article.urlToImage,
+        publishedAt: article.publishedAt,
+        resource: article.source.name
+    }
+    headlinesByCategory.push(dataElement);
+}
+
+

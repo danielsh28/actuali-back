@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2d1f0b9c-bceb-4677-8069-6b5732a9434c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/server-scripts/agent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server scripts/agent.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/monitor-constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/monitor-constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monitor-data/data.service.db.js" beforeDir="false" afterPath="$PROJECT_DIR$/monitor-data/data.service.db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1aiLfNEa6KnUvmVKUIoOWud1rBT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="8.10.0" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+  </component>
+  <component name="RunManager" selected="Node.js.agent.js">
+    <configuration name="agent.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/server-scripts/agent.js" working-dir="$PROJECT_DIR$/server-scripts">
+      <method v="2" />
+    </configuration>
+    <configuration name="www" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/bin/www" working-dir="$PROJECT_DIR$/bin">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.agent.js" />
+        <item itemvalue="Node.js.www" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2d1f0b9c-bceb-4677-8069-6b5732a9434c" name="Default Changelist" comment="" />
+      <created>1587213569639</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1587213569639</updated>
+      <workItem from="1587213570747" duration="9685000" />
+      <workItem from="1587928267566" duration="25000" />
+      <workItem from="1587992998768" duration="4000" />
+      <workItem from="1588251990480" duration="21524000" />
+    </task>
+    <task id="LOCAL-00001" summary="fixing mongo query and additional refactoring">
+      <created>1587512071539</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1587512071539</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fixing mongo query and additional refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing mongo query and additional refactoring" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="648" y="303" width="1202" height="777" key="#xdebugger.evaluate" timestamp="1588443480144">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="648" y="303" width="1202" height="777" key="#xdebugger.evaluate/67.27.1853.1053@67.27.1853.1053" timestamp="1588443480144" />
+    <state x="532" y="100" width="912" height="904" key="CommitChangelistDialog2" timestamp="1587512071396">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="532" y="100" width="912" height="904" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1587512071396" />
+    <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1588441610665">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1588441610665" />
+    <state width="1807" height="334" key="GridCell.Tab.0.bottom" timestamp="1588462943187">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1588462943187" />
+    <state width="1807" height="334" key="GridCell.Tab.0.center" timestamp="1588462943187">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1588462943187" />
+    <state width="1807" height="334" key="GridCell.Tab.0.left" timestamp="1588462943186">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1588462943186" />
+    <state width="1807" height="334" key="GridCell.Tab.0.right" timestamp="1588462943187">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1588462943187" />
+    <state width="1807" height="334" key="GridCell.Tab.1.bottom" timestamp="1588462945237">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1588462945237" />
+    <state width="1807" height="334" key="GridCell.Tab.1.center" timestamp="1588462945236">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1588462945236" />
+    <state width="1807" height="334" key="GridCell.Tab.1.left" timestamp="1588462945236">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1588462945236" />
+    <state width="1807" height="334" key="GridCell.Tab.1.right" timestamp="1588462945237">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1588462945237" />
+    <state width="1807" height="334" key="GridCell.Tab.2.bottom" timestamp="1588462943017">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.2.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1588462943017" />
+    <state width="1807" height="334" key="GridCell.Tab.2.center" timestamp="1588462943016">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.2.center/67.27.1853.1053@67.27.1853.1053" timestamp="1588462943016" />
+    <state width="1807" height="334" key="GridCell.Tab.2.left" timestamp="1588462943015">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.2.left/67.27.1853.1053@67.27.1853.1053" timestamp="1588462943015" />
+    <state width="1807" height="334" key="GridCell.Tab.2.right" timestamp="1588462943016">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.2.right/67.27.1853.1053@67.27.1853.1053" timestamp="1588462943016" />
+    <state width="1807" height="334" key="GridCell.Tab.3.bottom" timestamp="1588462943019">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.3.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1588462943019" />
+    <state width="1807" height="334" key="GridCell.Tab.3.center" timestamp="1588462943018">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.3.center/67.27.1853.1053@67.27.1853.1053" timestamp="1588462943018" />
+    <state width="1807" height="334" key="GridCell.Tab.3.left" timestamp="1588462943017">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.3.left/67.27.1853.1053@67.27.1853.1053" timestamp="1588462943017" />
+    <state width="1807" height="334" key="GridCell.Tab.3.right" timestamp="1588462943018">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.3.right/67.27.1853.1053@67.27.1853.1053" timestamp="1588462943018" />
+    <state x="67" y="74" width="1444" height="835" key="SettingsEditor" timestamp="1587291911852">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="67" y="74" width="1444" height="835" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1587291911852" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1587512073088">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1587512073088" />
+    <state x="684" y="293" width="618" height="518" key="find.popup" timestamp="1588428331029">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="684" y="293" width="618" height="518" key="find.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1588428331029" />
+    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1587291801264">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1587291801264" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/monitor-data/data.service.db.js</url>
+          <line>38</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/server-scripts/agent.js</url>
+          <line>17</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/monitor-data/data.service.db.js</url>
+          <line>29</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
