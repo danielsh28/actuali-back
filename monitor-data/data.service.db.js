@@ -31,7 +31,7 @@ module.exports.inserTtoDB = function insertToDB(dataFromServer) {
         const headlinesFromCategory = headlinesByCategory.headlines;
          ResourceModel.findOne({category: categoryElement}, function (doc) {
             if (doc != null) {
-                ResourceModel.updateOne({category: doc.category}, {$push: {headlines: headlinesFromCategory}}).then(() => {
+                ResourceModel.updateOne({category: doc.category}, {addToSet: {headlines:{$each:headlinesFromCategory} }}).then(() => {
                     ResourceModel.conformSave('category ' + doc[0].category + ' updated');
                 });
             } else {
@@ -43,17 +43,42 @@ module.exports.inserTtoDB = function insertToDB(dataFromServer) {
         }).catch(error => console.log(error));
     }
 
+module.exports.getCategoryFromDB = async function (){
+          let catagoriesFromDB = [];
+          try{
+              catagoriesFromDB = await ResourceModel.aggregate({$unwind: "$headlines"},
+              {$sort : {"headlines.publishedAt":-1}},{$group: { _id: "$category",urlToImage:{$first: "$headlines.urlToImage"}}})
+          }
+          catch (err) {
+              console.log(err);
 
+          }
+            return cata
+}
+const getCatagoriesFromDB = ()=>{
+          return ResourceModel.aggregate({$unwind: "$headlines"}, {$sort : {"headlines.publishedAt":-1}},
+              {$group: { _id: "$category",urlToImage:{$first: "$headlines.urlToImage"}}});
+}
 
-module.exports.getNewsFromDB = async function getServerData(resource) {
+const getNewsFromDB = ()=>{
+          return ResourceModel.aggregate([{$match: {category:'sport'}},{$unwind: '$headlines'},
+              {$sort : {'headlines.publishedAt' : -1}},{$project : {'_id':0, "headlines": 1}}])
+}
+module.exports.getServerData = async function getServerData(queryCallback) {
     let datafromdB = ['non-initialized'];
-   await ResourceModel.aggregate
-   ([{$match:{resourceName:new RegExp('.+' + resource + '.+')}},{$unwind:'$headlines'},{$sort:{'headlines.publishedAt':-1}},
-       {$group:{_id:'$resourceName',title:{$first:'$headlines.title'},publishedAt:{$first:'$headlines.publishedAt'},
-           urlToImage:{$first:'$headlines.urlToImage'}}}]).
-    then(data=>datafromdB=data)
-        .catch(err => console.log(err));
+   try{
+         datafromdB = await queryCallback();
+   }
+   catch (err) {
+       console.log(err)
+   }
 
-    return datafromdB;
+    return datafromdB.map(element=>({
+        title: element.headlines.title,
+        url: element.headlines.url,
+        urlToImage: element.headlines.urlToImage,
+        publishedAt : element.headlines.publishedAt,
+        resource : element.headlines.resource
+    }));
 };
 

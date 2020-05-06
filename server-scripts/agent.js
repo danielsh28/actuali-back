@@ -2,7 +2,6 @@ require('dotenv').config();
 const dataService = require('../monitor-data/data.service.db');
 const apiConst = require('../monitor-constants.js');
 const axios = require('axios');
-const argv = require('minimist')(process.argv.slice(2));
 const errFunc = err => console.log(' error fetching from : ' + urlToGet + ": " + err.message);
 
 
