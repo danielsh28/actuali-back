@@ -5,6 +5,7 @@ const axios = require('axios');
 const errFunc = err => console.log(' error fetching from : ' + urlToGet + ": " + err.message);
 
 
+
 (function getDataFromAPI() {
     Object.values(apiConst.categories).forEach(category=> getDataByCategory(category));
 })();
