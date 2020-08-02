@@ -18,7 +18,7 @@ const resourceSchema = new mongoose.Schema({
     headlines: [contentSchema]
 });
 resourceSchema.methods.conformSave = (log) => console.log(log);
-const ResourceModel = mongoose.model('Resource', resourceSchema);
+const ResourceModel = mongoose.model('resource', resourceSchema);
 
 
 
@@ -28,10 +28,10 @@ const ResourceModel = mongoose.model('Resource', resourceSchema);
 module.exports.inserTtoDB =  function handleHeadlinesByResource(headlinesByCategory) {
         const categoryElement = headlinesByCategory.category;
         const headlinesFromCategory = headlinesByCategory.headlines;
-         ResourceModel.findOne({category: categoryElement}, function (doc) {
+         ResourceModel.findOne({category: categoryElement}, function (err,doc) {
             if (doc != null) {
                 ResourceModel.updateOne({category: doc.category}, {addToSet: {headlines:{$each:headlinesFromCategory} }}).then(() => {
-                    ResourceModel.conformSave('category ' + doc[0].category + ' updated');
+                    resourceSchema.methods.conformSave('category ' + doc.category + ' updated');
                 });
             } else {
                 ResourceModel.create({category: categoryElement, headlines: headlinesFromCategory}).then(()=>{

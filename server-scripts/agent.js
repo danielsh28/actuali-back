@@ -6,9 +6,10 @@ const errFunc = err => console.log(' error fetching from : ' + urlToGet + ": " +
 
 
 
-(function getDataFromAPI() {
+module.exports.fetchNewsData = function getDataFromAPI() {
+    console.log(`[${new Date().toString()}] fetching news... `);
     Object.values(apiConst.categories).forEach(category=> getDataByCategory(category));
-})();
+};
 
 async function getDataByCategory(category) {
     const query =`${apiConst.ISR_HEADLINES}&${apiConst.CATEGORY}=${category}`;
