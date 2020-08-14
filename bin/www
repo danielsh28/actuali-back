@@ -23,7 +23,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 fetchNewsData();
-const job = new CronJob('* */10 * * * *',fetchNewsData);
+const job = new CronJob('0 */10 * * * *',fetchNewsData);
 job.start();
 const server = http.createServer(app);
 
