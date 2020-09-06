@@ -12,13 +12,13 @@ const contentSchema = new mongoose.Schema({
     url:String,
     urlToImage:String,
     resource:String
-});
+},{_id:false});
 const resourceSchema = new mongoose.Schema({
     category: String,
     headlines: [contentSchema]
 });
 resourceSchema.methods.conformSave = (log) => console.log(log);
-const ResourceModel = mongoose.model('Resource', resourceSchema);
+const ResourceModel = mongoose.model('resource', resourceSchema);
 
 
 
@@ -28,11 +28,12 @@ const ResourceModel = mongoose.model('Resource', resourceSchema);
 module.exports.inserTtoDB =  function handleHeadlinesByResource(headlinesByCategory) {
         const categoryElement = headlinesByCategory.category;
         const headlinesFromCategory = headlinesByCategory.headlines;
-         ResourceModel.findOne({category: categoryElement}, function (doc) {
+         ResourceModel.findOne({category: categoryElement}, async function (err,doc) {
             if (doc != null) {
-                ResourceModel.updateOne({category: doc.category}, {addToSet: {headlines:{$each:headlinesFromCategory} }}).then(() => {
-                    ResourceModel.conformSave('category ' + doc[0].category + ' updated');
-                });
+               const updatedDoc = await  ResourceModel.findOneAndUpdate({category: doc.category}, {$addToSet: {headlines:{$each:headlinesFromCategory}}}
+                ,{new: true,
+                       useFindAndModify:false});
+                console.log(`headlines from ${categoryElement} updated from ${doc.headlines.length} to ${updatedDoc.headlines.length}`);
             } else {
                 ResourceModel.create({category: categoryElement, headlines: headlinesFromCategory}).then(()=>{
                     resourceSchema.methods.conformSave('category ' + categoryElement + ' created');
@@ -43,26 +44,28 @@ module.exports.inserTtoDB =  function handleHeadlinesByResource(headlinesByCateg
     }
 
 
-module.exports.getCategoriesFromDB =  function (params){
+module.exports.getCategoriesFromDB =  function (){
           return ResourceModel.aggregate([{$unwind: "$headlines"}, {$sort : {"headlines.publishedAt":-1}},
               {$group: { _id: "$category",urlToImage:{$first: "$headlines.urlToImage"}}}]).then(
               categories => categories.map(cat => ({
                       catName:cat._id,
                       urlToImage : cat.urlToImage
                   })
-              )
+              ).filter(cat => cat.catName!=='general')
           );
 }
 
-module.exports.getNewsFromDB = function  (categories){
-          return ResourceModel.aggregate([{$match:{category:{$in:categories}}},{$unwind: '$headlines'},
-              {$sort : {'headlines.publishedAt' : -1}},{$project : {'_id':0, "headlines": 1}}]).then(newsList=>
+module.exports.getNewsFromDB = function  (params){
+          return ResourceModel.aggregate([{$match:{category:{$in:params.cat}}},{$unwind: '$headlines'},
+              {$group:{_id:"$headlines.url",cat:{$first:'category'}, title:{$first:'$headlines.title'},
+                      urlToImage:{$first:"$headlines.urlToImage"},publishedAt:{$first:'$headlines.publishedAt'},resource:{$first:'$headlines.resource'}}}
+              ,{$sort : {'publishedAt' : -1}},{$limit:parseInt(params.count)}]).then(newsList=>
               newsList.map(element=>({
-        title: element.headlines.title,
-        url: element.headlines.url,
-        urlToImage: element.headlines.urlToImage,
-        publishedAt : element.headlines.publishedAt,
-        resource : element.headlines.resource}))
+        title: element.title,
+        url: element._id,
+        urlToImage: element.urlToImage,
+        publishedAt : element.publishedAt,
+        resource : element.resource}))
           );
 }
 module.exports.getServerData = async function getServerData(queryCallback,params) {
@@ -73,7 +76,7 @@ module.exports.getServerData = async function getServerData(queryCallback,params
         console.log(err)
     }
 
-    return datafromdB;
+    return [...new Set(datafromdB)];
 
 
 }

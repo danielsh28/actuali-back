@@ -12,7 +12,7 @@ router.get('/choose-category',async (req,res)=>{
 });
 
  router.get('/user-dashboard',async (req,res)=>{
-   const data = await dbService.getServerData(dbService.getNewsFromDB,req.query.cat);
+   const data = await dbService.getServerData(dbService.getNewsFromDB,req.query);
   res.send(JSON.stringify(data));
  });
 

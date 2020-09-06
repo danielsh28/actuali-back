@@ -2,13 +2,14 @@ require('dotenv').config();
 const dataService = require('../monitor-data/data.service.db');
 const apiConst = require('../monitor-constants.js');
 const axios = require('axios');
-const errFunc = err => console.log(' error fetching from : ' + urlToGet + ": " + err.message);
 
-
-
-(function getDataFromAPI() {
+module.exports.fetchNewsData = function getDataFromAPI() {
+  /*  process.stdout.clearLine();
+    process.stdout.cursorTo(0);
+    process.stdout.write(`[${new Date().toString()}]`);
+    console.log(`fetching news... `);*/
     Object.values(apiConst.categories).forEach(category=> getDataByCategory(category));
-})();
+};
 
 async function getDataByCategory(category) {
     const query =`${apiConst.ISR_HEADLINES}&${apiConst.CATEGORY}=${category}`;
@@ -28,7 +29,6 @@ function handleHeadlinesFromApi(articles,category) {
         headlines:headlinesFromResource
     }
 }
-/*setInterval(fetchHeadLines,2000);*/
 
 function buildCategoryHeadlineFromApi(category,article, headlinesByCategory) {
     const dataElement = {

@@ -7,7 +7,9 @@
 const app = require('../app');
 const debug = require('debug')('server-monitor:server');
 const http = require('http');
-const dbService = require("../monitor-data/data.service.db");
+const CronJob = require('cron').CronJob;
+const fetchNewsData = require('../server-scripts/agent').fetchNewsData;
+
 
 
 /**
@@ -20,15 +22,11 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
-
+fetchNewsData();
+const job = new CronJob('0 */10 * * * *',fetchNewsData);
+job.start();
 const server = http.createServer(app);
-const io = require('socket.io')(server);
-/*io.set('origins', '*:*');
-io.on('connect',(socket)=>{
-  console.log('emmiting data trough socket...');
-  setInterval( dbService.getNewsFromDB.bind(null,socket),1000);
 
-});*/
 
 
 
