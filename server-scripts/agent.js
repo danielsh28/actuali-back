@@ -4,10 +4,10 @@ const apiConst = require('../monitor-constants.js');
 const axios = require('axios');
 
 module.exports.fetchNewsData = function getDataFromAPI() {
-    process.stdout.clearLine();
+  /*  process.stdout.clearLine();
     process.stdout.cursorTo(0);
     process.stdout.write(`[${new Date().toString()}]`);
-    console.log(`fetching news... `);
+    console.log(`fetching news... `);*/
     Object.values(apiConst.categories).forEach(category=> getDataByCategory(category));
 };
 
