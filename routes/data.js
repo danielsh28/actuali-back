@@ -1,11 +1,10 @@
-const express = require('express');
+import { insertToDB} from "../monitor-data/data.service.db.ts";
+import  express from 'express';
+
 const router = express.Router();
-const dbService = require('../monitor-data/data.service.db');
-
-
 router.post('/',(req,res)=>{
-dbService.inserTtoDB( req.body
+insertToDB( req.body
 ).then(data=>res.send(data));
 });
 
-module.exports.dataRouter = router;
+export default  router;

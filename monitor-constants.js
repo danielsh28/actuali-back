@@ -1,5 +1,5 @@
 require('dotenv').config();
-module.exports= {
+export default {
     BASE_API: 'https://newsapi.org/v2/top-headlines',
     CATEGORY : 'category',
     categories:{

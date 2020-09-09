@@ -4,11 +4,12 @@
  * Module dependencies.
  */
 
-const app = require('../app');
-const debug = require('debug')('server-monitor:server');
-const http = require('http');
-const CronJob = require('cron').CronJob;
-const fetchNewsData = require('../server-scripts/agent').fetchNewsData;
+import app  from '../app';
+import debug  from 'debug';
+import http  from 'http';
+import cron  from 'cron';
+import fetchNewsData  from '../server-scripts/agent';
+import ErrnoException = NodeJS.ErrnoException;
 
 
 
@@ -23,9 +24,9 @@ app.set('port', port);
  * Create HTTP server.
  */
 fetchNewsData();
-const job = new CronJob('0 */10 * * * *',fetchNewsData);
+const job = new cron.CronJob('0 */10 * * * *',fetchNewsData);
 job.start();
-const server = http.createServer(app);
+const server  :http.Server= http.createServer(app);
 
 
 
@@ -41,7 +42,7 @@ server.on('listening', onListening);
  * Normalize a port into a number, string, or false.
  */
 
-function normalizePort(val) {
+function normalizePort(val :string) {
   const port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -61,7 +62,7 @@ function normalizePort(val) {
  * Event listener for HTTP server "error" event.
  */
 
-function onError(error) {
+function onError(error :ErrnoException) {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -94,5 +95,5 @@ function onListening() {
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  debug('server-monitor:server')('Listening on ' + bind);
 }

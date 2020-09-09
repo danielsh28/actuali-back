@@ -1,9 +1,9 @@
 require('dotenv').config();
-const dataService = require('../monitor-data/data.service.db');
+const dataService = require('data.service.db.ts');
 const apiConst = require('../monitor-constants.js');
 const axios = require('axios');
 
-module.exports.fetchNewsData = function getDataFromAPI() {
+function getDataFromAPI() {
   /*  process.stdout.clearLine();
     process.stdout.cursorTo(0);
     process.stdout.write(`[${new Date().toString()}]`);
@@ -40,5 +40,7 @@ function buildCategoryHeadlineFromApi(category,article, headlinesByCategory) {
     }
     headlinesByCategory.push(dataElement);
 }
+
+export default getDataFromAPI;
 
 
