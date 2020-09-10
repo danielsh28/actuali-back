@@ -1,4 +1,4 @@
-/monitor-data/playground.js
 /.env
 /.idea
 /node_modules
+/build
