@@ -1,4 +1,4 @@
-const util = require('../routes/data.js');
+const util = require('data.ts');
 
 //test
 test('doc inserted',()=> {
