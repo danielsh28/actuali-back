@@ -12,6 +12,9 @@
     "debug": "tsc && node --inspect ./build/bin/www.js",
     "tsc": "tsc"
   },
+  "engines": {
+    "node": 10
+  },
   "prettier": {
     "singleQuote": true,
     "arrowParens": "always",

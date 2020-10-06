@@ -1,1 +1,1 @@
-web: tsc && node ./build/bin/fff.js
+web: tsc && node build/bin/www.js
