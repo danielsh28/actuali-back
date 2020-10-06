@@ -41,7 +41,8 @@
     "os-utils": "0.0.14",
     "qs": "^6.9.4",
     "socket.io": "^2.3.0",
-    "systeminformation": "^4.15.3"
+    "systeminformation": "^4.15.3",
+    "typescript": "^4.0.3"
   },
   "devDependencies": {
     "@types/assert": "^1.5.2",
