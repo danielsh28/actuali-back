@@ -16,5 +16,5 @@
     "outDir": "./build"
   },
   "include": ["./**/*"],
-  "exclude": ["node_modules","views","tests"]
+  "exclude": ["node_modules","views","tests","build"]
 }
