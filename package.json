@@ -5,11 +5,12 @@
   "scripts": {
     "start": "npm run dev",
     "test": "jest",
-    "build": "tsc",
     "lint": "eslint . & echo 'lint complete'",
     "dev": "ts-node-dev --respawn  ./bin/www.ts",
     "prod": "tsc && node ./build/bin/www.js",
-    "debug": "tsc && node --inspect ./build/bin/www.js"
+    "debug": "tsc && node --inspect ./build/bin/www.js",
+    "tsc": "tsc",
+    "postinstall": "npm run tsc"
   },
   "prettier": {
     "singleQuote": true,
@@ -40,7 +41,8 @@
     "os-utils": "0.0.14",
     "qs": "^6.9.4",
     "socket.io": "^2.3.0",
-    "systeminformation": "^4.15.3"
+    "systeminformation": "^4.15.3",
+    "typescript": "^4.0.3"
   },
   "devDependencies": {
     "@types/assert": "^1.5.2",
