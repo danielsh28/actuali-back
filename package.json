@@ -18,6 +18,7 @@
     "printWidth": 120
   },
   "dependencies": {
+    "ts-node": "^9.0.0",
     "@types/node": "^14.6.4",
     "assert": "^2.0.0",
     "axios": "^0.19.0",
@@ -61,7 +62,6 @@
     "eslint-plugin-import": "^2.22.0",
     "jest": "^24.9.0",
     "prettier": "^2.1.1",
-    "ts-node": "^9.0.0",
     "ts-node-dev": "^1.0.0-pre.62"
   }
 }
