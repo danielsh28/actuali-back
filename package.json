@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start:dev": "npm run dev",
-    "start:prod": "npm run prod",
+    "start": "npm run dev",
     "test": "jest",
     "lint": "eslint . & echo 'lint complete'",
     "dev": "ts-node-dev --respawn  ./bin/www.ts",
