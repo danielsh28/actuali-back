@@ -9,7 +9,9 @@
     "lint": "eslint . & echo 'lint complete'",
     "dev": "ts-node-dev --respawn  ./bin/www.ts",
     "prod": "tsc && node ./build/bin/www.js",
-    "debug": "tsc && node --inspect ./build/bin/www.js"
+    "debug": "tsc && node --inspect ./build/bin/www.js",
+    "tsc": "tsc",
+    "postinstall": "npm run tsc"
   },
   "prettier": {
     "singleQuote": true,
