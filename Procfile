@@ -1,0 +1,1 @@
+web: tsc && node ./build/bin/www.js
