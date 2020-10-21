@@ -1,13 +1,9 @@
-import mongoose, { Document, Model } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import QueryString from 'qs';
 import appConst from '../monitor-constants';
 
-mongoose
-  .connect(appConst.DB_URL, { useNewUrlParser: true })
-  .catch((err) => console.log(`connection failed : ${err.message}`));
-const db = mongoose.connection;
-db.on('Error', () => console.log('Error connect to database'));
-db.once('open', () => console.log('Connection established successfully'));
+const { connection } = mongoose;
+
 
 export interface IContentSchema extends Document {
   publishedAt: Date;
@@ -71,6 +67,7 @@ const getCategoriesFromDB = function () {
   ]).then((categories) =>
     categories
       .map((cat) => ({
+        // eslint-disable-next-line no-underscore-dangle
         catName: cat._id,
         urlToImage: cat.urlToImage,
       }))
@@ -114,4 +111,4 @@ export async function getServerData(queryCallback: Function, params?: QueryStrin
 
   return [...new Set(datafromdB)];
 }
-export { handleHeadlinesByResource as insertToDB, getCategoriesFromDB, getNewsFromDB };
+export { connection, handleHeadlinesByResource as insertToDB, getCategoriesFromDB, getNewsFromDB };
