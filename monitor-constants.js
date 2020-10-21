@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
 import path from 'path';
 
+const envPath = process.env.TS_NODE_DEV ? '.env.local' : '../.env.local';
+console.log(`ts_node_dev :${path.resolve(__dirname)}`);
+
 dotenv.config({
-  path: path.resolve(
-    __dirname,
-    process.env.NODE_ENV === 'dev' || process.env.TS_NODE_DEV ? '../.env.local' : '../.env',
-  ),
+  path: path.resolve(__dirname, envPath),
 });
 
 export default {
