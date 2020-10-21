@@ -4,17 +4,35 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
 import path from 'path';
+import session from 'express-session';
+import connectMongo from 'connect-mongo';
 import usersRouter from './routes/users';
 import indexRouter from './routes';
 import dataRouter from './routes/data';
 import webAPIRouter from './routes/api';
+import { connection } from './monitor-data/data.service.db';
 
 const app = express();
+const SessionStore = connectMongo(session);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+app.use(
+  session({
+    name: 'actuali_sessid',
+    secret: 'some secret',
+    resave: false,
+    saveUninitialized: true,
+    store: new SessionStore({
+      mongooseConnection: connection,
+      collection: 'sessions',
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60,
+    },
+  }),
+);
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());

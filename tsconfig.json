@@ -3,7 +3,7 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "allowJs": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "moduleResolution": "node",
     "lib": ["es2018"],
     "module": "commonjs",
