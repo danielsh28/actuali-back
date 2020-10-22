@@ -5,12 +5,13 @@ import logger from 'morgan';
 import cors from 'cors';
 import path from 'path';
 import session from 'express-session';
+import passport from 'passport';
 import connectMongo from 'connect-mongo';
 import usersRouter from './routes/users';
 import indexRouter from './routes';
 import dataRouter from './routes/data';
 import webAPIRouter from './routes/api';
-import { connection } from './monitor-data/data.service.db';
+import { connection } from './service/data.service.db';
 
 const app = express();
 const SessionStore = connectMongo(session);

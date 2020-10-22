@@ -1,9 +1,7 @@
 import mongoose, { Document } from 'mongoose';
 import QueryString from 'qs';
-import appConst from '../monitor-constants';
 
 const { connection } = mongoose;
-
 
 export interface IContentSchema extends Document {
   publishedAt: Date;
@@ -38,10 +36,10 @@ resourceSchema.methods.conformSave = (log: string) => console.log(log);
 const ResourceModel = mongoose.model<IResourceSchema>('resource', resourceSchema);
 
 // function update exist resource document in a new content or creating a new one with a new resource
-function handleHeadlinesByResource(headlinesByCategory: { category: string; headlines: Array<any> }) {
+function handleHeadlinesByResource(headlinesByCategory: { category: string; headlines: Array<any> }): void {
   const categoryElement: string = headlinesByCategory.category;
   const headlinesFromCategory: Array<any> = headlinesByCategory.headlines;
-  ResourceModel.findOne({ category: categoryElement }, async function (err, doc: IResourceSchema) {
+  ResourceModel.findOne({ category: categoryElement }, async function updateCategory(err, doc: IResourceSchema) {
     if (doc != null) {
       const updatedDoc = await ResourceModel.findOneAndUpdate(
         { category: doc.category },
@@ -90,7 +88,7 @@ const getNewsFromDB = function (params: QueryString.ParsedQs) {
       },
     },
     { $sort: { publishedAt: -1 } },
-    { $limit: parseInt(params.count as string) },
+    { $limit: parseInt(params.count as string, 2) },
   ]).then((newsList) =>
     newsList.map((element) => ({
       title: element.title,

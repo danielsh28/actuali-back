@@ -8,7 +8,7 @@ import debug from 'debug';
 import http from 'http';
 import mongoose from 'mongoose';
 import cron from 'cron';
-import appConst from '../monitor-constants';
+import appConst from 'AppConstants.js';
 import app from '../app';
 import fetchNewsData from '../server-scripts/agent';
 import ErrnoException = NodeJS.ErrnoException;

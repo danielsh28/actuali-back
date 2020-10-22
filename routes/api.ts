@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import QueryString from 'qs';
 
-import { getCategoriesFromDB, getServerData, getNewsFromDB } from '../monitor-data/data.service.db';
+import { getCategoriesFromDB, getServerData, getNewsFromDB } from '../service/data.service.db';
 
 const router = express.Router();
 
