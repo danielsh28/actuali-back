@@ -11,6 +11,7 @@ import usersRouter from './routes/users';
 import indexRouter from './routes';
 import dataRouter from './routes/data';
 import webAPIRouter from './routes/api';
+import authRouter from './routes/auth';
 import { connection } from './service/data.service.db';
 
 const app = express();
@@ -44,6 +45,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/newsapi/data', dataRouter);
 app.use('/api/', webAPIRouter);
+app.use('/auth/', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,13 +1,11 @@
 import mongoose, {Document, Schema} from 'mongoose';
-import {google} from "google-gax/protos/iam_service";
-import type = google.type;
-import {booleanLiteral} from "@babel/types";
-
-interface IUserSchema extends  Document{
-    username: string,
+export interface IUserHashedDetails {
     hash: string,
     salt: string,
-    admin: boolean,
+}
+export interface IUser extends IUserHashedDetails,Document{
+    username: string,
+    admin?: boolean,
 }
 const UserSchema  = new mongoose.Schema({
   username: {type:String,required:true,unique:true},
@@ -16,6 +14,6 @@ const UserSchema  = new mongoose.Schema({
   admin: {type: Boolean, required: false,unique:false},
 });
 
-const userModel  = mongoose.model<IUserSchema>('User', UserSchema);
+const userModel  = mongoose.model<IUser>('User', UserSchema);
 
 export default userModel;

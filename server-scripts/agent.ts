@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { insertToDB, IContentSchema } from '../monitor-data/data.service.db';
-import apiConst from 'AppConstants.js';
+import { insertToDB, IContentSchema } from '../service/data.service.db';
+import apiConst from '../config/AppConstants.js';
 
 function buildCategoryHeadlineFromApi(category: string, article: IContentSchema, headlinesByCategory: Array<any>) {
   const dataElement = {

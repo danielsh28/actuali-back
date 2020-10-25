@@ -8,7 +8,7 @@ import debug from 'debug';
 import http from 'http';
 import mongoose from 'mongoose';
 import cron from 'cron';
-import appConst from 'AppConstants.js';
+import appConst from '../config/AppConstants';
 import app from '../app';
 import fetchNewsData from '../server-scripts/agent';
 import ErrnoException = NodeJS.ErrnoException;
@@ -74,8 +74,6 @@ connection.once('open', () => {
 
   app.set('port', port);
   console.log(`dev mode:${process.env.TS_NODE_DEV}`);
-
-  fetchNewsData();
 
   const job = new cron.CronJob('0 * 0 * * *', fetchNewsData);
   job.start();

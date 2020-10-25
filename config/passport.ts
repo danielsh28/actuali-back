@@ -1,12 +1,13 @@
 import passport from 'passport';
-import LocalStrategy, {VerifyFunction} from 'passport-local';
-import User from '../service/users.servive.db';
+import {VerifyFunction ,Strategy as LocaStrategy} from 'passport-local';
+import userModel,{IUser} from '../service/users.service.db';
+import {verifyPassword} from "../utils/hash";
 
 const localAuthCallback : VerifyFunction = (userName: string, password :string, done  ) => {
 
-    User.findOne({ userName }).then((user) => {
+    userModel.findOne({ userName }).then((user) => {
     if (user) {
-        const isValid = validPassword(password, user.hash, user.salt);
+        const isValid =  verifyPassword(password, user.hash, user.salt);
         if(isValid){
             done(null,user)
         }
@@ -16,3 +17,18 @@ const localAuthCallback : VerifyFunction = (userName: string, password :string, 
     }
   });
 };
+
+const strategy : LocaStrategy = new LocaStrategy(localAuthCallback);
+
+passport.serializeUser((user :IUser , done) => {
+    done(null, user.id);
+});
+
+passport.deserializeUser((userId, done) => {
+    userModel.findById(userId)
+        .then((user) => {
+            done(null, user);
+        })
+        .catch(err => done(err))
+});
+
