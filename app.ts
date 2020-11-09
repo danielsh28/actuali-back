@@ -5,7 +5,7 @@ import logger from 'morgan';
 import cors from 'cors';
 import path from 'path';
 import session from 'express-session';
-import passport from 'passport';
+import passportAuth from './config/passport';
 import connectMongo from 'connect-mongo';
 import usersRouter from './routes/users';
 import indexRouter from './routes';
@@ -15,11 +15,9 @@ import authRouter from './routes/auth';
 import { connection } from './service/data.service.db';
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 const SessionStore = connectMongo(session);
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 app.use(
   session({
     name: 'actuali_sessid',
@@ -35,11 +33,15 @@ app.use(
     },
   }),
 );
-app.use(cors());
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.set('view engine', 'jade');
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.use(passportAuth.initialize());
+app.use(passportAuth.session());
+app.use(cors({ credentials: true, origin: 'http://localhost:4000' }));
 app.use(cookieParser());
+app.use(logger('dev'));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -60,7 +62,7 @@ app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send('<h> page not found</h>');
 });
 
 export default app;

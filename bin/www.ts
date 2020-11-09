@@ -75,7 +75,7 @@ connection.once('open', () => {
   app.set('port', port);
   console.log(`dev mode:${process.env.TS_NODE_DEV}`);
 
-  const job = new cron.CronJob('0 * 0 * * *', fetchNewsData);
+  const job = new cron.CronJob('0 * * * *', fetchNewsData);
   job.start();
 
   /**
