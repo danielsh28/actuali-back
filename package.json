@@ -42,7 +42,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "minimist": "^1.2.0",
-    "mongoose": "^5.7.10",
+    "mongoose": "^5.10.4",
     "morgan": "~1.9.1",
     "node-os-utils": "^1.1.0",
     "os-utils": "0.0.14",
