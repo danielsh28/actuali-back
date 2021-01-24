@@ -19,7 +19,7 @@ mongoose
   .catch((err) => console.log(`connection failed : ${err.message}`));
 connection.on('Error', () => console.log('Error connect to database'));
 connection.once('open', () => {
-  console.log('Connection established successfully');
+  console.log(`Connection established successfully to ${appConst.DB_URL} `);
 
   function normalizePort(val: string) {
     const port = parseInt(val, 10);

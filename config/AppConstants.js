@@ -20,6 +20,6 @@ export default {
     TECHNOLOGY: 'technology',
   },
   ISR_HEADLINES: '?country=il',
-  DB_URL: `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@appcluster-ztphv.mongodb.net/headlines?retryWrites=true&w=majority`,
+  DB_URL: process.env.DB_ENV ==='local' ? 'mongodb://127.0.0.1:27017' :  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@appcluster-ztphv.mongodb.net/headlines?retryWrites=true&w=majority`,
   API_KEY: process.env.API_KEY,
 };
