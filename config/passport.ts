@@ -19,12 +19,12 @@ const localAuthCallback: VerifyFunction = (userName: string, password: string, d
 const localStrategy: LocaStrategy = new LocaStrategy(localAuthCallback);
 
 passport.serializeUser((user: IUser, done) => {
-  done(null, user.id);
+  done(null, user.username);
 });
 
 passport.deserializeUser((userId, done) => {
   userModel
-    .findById(userId)
+    .findOne({username:userId})
     .then((user) => {
       done(null, user);
     })
