@@ -38,7 +38,7 @@ app.set('view engine', 'jade');
 app.set('views', path.join(__dirname, 'views'));
 app.use(passportAuth.initialize());
 app.use(passportAuth.session());
-app.use(cors({ credentials: true, origin: 'http://localhost:4000' }));
+app.use(cors({ credentials: true, origin: '*' }));
 app.use(cookieParser());
 app.use(logger('dev'));
 
