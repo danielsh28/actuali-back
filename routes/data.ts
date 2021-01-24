@@ -1,5 +1,5 @@
 import express from 'express';
-import { insertToDB } from '../monitor-data/data.service.db';
+import { insertToDB } from '../service/data.service.db';
 
 const router = express.Router();
 router.post('/', (req, res) => {

@@ -8,7 +8,7 @@ import debug from 'debug';
 import http from 'http';
 import mongoose from 'mongoose';
 import cron from 'cron';
-import appConst from '../monitor-constants';
+import appConst from '../config/AppConstants';
 import app from '../app';
 import fetchNewsData from '../server-scripts/agent';
 import ErrnoException = NodeJS.ErrnoException;
@@ -19,7 +19,7 @@ mongoose
   .catch((err) => console.log(`connection failed : ${err.message}`));
 connection.on('Error', () => console.log('Error connect to database'));
 connection.once('open', () => {
-  console.log('Connection established successfully');
+  console.log(`Connection established successfully to ${appConst.DB_URL} `);
 
   function normalizePort(val: string) {
     const port = parseInt(val, 10);
@@ -75,9 +75,7 @@ connection.once('open', () => {
   app.set('port', port);
   console.log(`dev mode:${process.env.TS_NODE_DEV}`);
 
-  fetchNewsData();
-
-  const job = new cron.CronJob('0 * 0 * * *', fetchNewsData);
+  const job = new cron.CronJob('0 * * * *', fetchNewsData);
   job.start();
 
   /**
