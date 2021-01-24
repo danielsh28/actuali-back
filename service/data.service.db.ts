@@ -88,7 +88,7 @@ const getNewsFromDB = function (params: QueryString.ParsedQs) {
       },
     },
     { $sort: { publishedAt: -1 } },
-    { $limit: parseInt(params.count as string, 2) },
+    { $limit: parseInt(params.count as string)},
   ]).then((newsList) =>
     newsList.map((element) => ({
       title: element.title,
