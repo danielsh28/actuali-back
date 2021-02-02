@@ -34,7 +34,9 @@ async function getDataByCategory(category: string) {
     console.log(e.response);
   }
 }
+function deleteOlHeadlines(){
 
+}
 function getDataFromAPI() {
   console.log(`fetch data in ${new Date().toLocaleTimeString()}`);
   Object.values(apiConst.categories).forEach((category) => getDataByCategory(category));

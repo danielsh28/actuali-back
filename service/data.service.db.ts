@@ -1,16 +1,18 @@
 import mongoose, { Document } from 'mongoose';
 import QueryString from 'qs';
 
+
 const { connection } = mongoose;
 
 export interface IContentSchema extends Document {
-  publishedAt: Date;
+  publishedAt: Date | Object;
   title: string;
   url: string;
   urlToImage: string;
   resource: string;
   source?: any;
 }
+
 
 interface IResourceSchema extends Document {
   category: string;
@@ -33,7 +35,7 @@ const resourceSchema = new mongoose.Schema({
 });
 
 resourceSchema.methods.conformSave = (log: string) => console.log(log);
-const ResourceModel = mongoose.model<IResourceSchema>('resource', resourceSchema);
+export const ResourceModel = mongoose.model<IResourceSchema>('resource', resourceSchema);
 
 // function update exist resource document in a new content or creating a new one with a new resource
 function handleHeadlinesByResource(headlinesByCategory: { category: string; headlines: Array<any> }): void {
@@ -60,7 +62,6 @@ function handleHeadlinesByResource(headlinesByCategory: { category: string; head
 const getCategoriesFromDB = function () {
   return ResourceModel.aggregate([
     { $unwind: '$headlines' },
-    { $sort: { 'headlines.publishedAt': -1 } },
     { $group: { _id: '$category', urlToImage: { $first: '$headlines.urlToImage' } } },
   ]).then((categories) =>
     categories
@@ -89,7 +90,7 @@ const getNewsFromDB = function (params: QueryString.ParsedQs) {
     },
     { $sort: { publishedAt: -1 } },
     { $limit: parseInt(params.count as string)},
-  ]).then((newsList) =>
+  ]).allowDiskUse(true).then((newsList) =>
     newsList.map((element) => ({
       title: element.title,
       url: element._id,
@@ -100,13 +101,15 @@ const getNewsFromDB = function (params: QueryString.ParsedQs) {
   );
 };
 export async function getServerData(queryCallback: Function, params?: QueryString.ParsedQs) {
-  let datafromdB = ['non-initialized'];
+  let datafromdB  ;
   try {
     datafromdB = await queryCallback(params);
   } catch (err) {
     console.log(err);
+    datafromdB =  err;
   }
 
-  return [...new Set(datafromdB)];
+  return datafromdB;
 }
+
 export { connection, handleHeadlinesByResource as insertToDB, getCategoriesFromDB, getNewsFromDB };
