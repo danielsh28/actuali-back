@@ -12,6 +12,7 @@ import appConst from '../config/AppConstants';
 import app from '../app';
 import fetchNewsData from '../server-scripts/agent';
 import ErrnoException = NodeJS.ErrnoException;
+import {deleteOldHeadlines} from "../server-scripts/delete-old";
 
 const { connection } = mongoose;
 mongoose
@@ -75,9 +76,13 @@ connection.once('open', () => {
   app.set('port', port);
   console.log(`dev mode:${process.env.TS_NODE_DEV}`);
 
-  const job = new cron.CronJob('0 * * * *', fetchNewsData);
-  job.start();
-
+  const fetchNewsJob = new cron.CronJob('0 * * * *', fetchNewsData);
+  fetchNewsJob.start();
+/*
+  deleteOldHeadlines()
+*/
+  const deleteHeadlinesJob = new cron.CronJob('0 0 * * *',deleteOldHeadlines);
+  deleteHeadlinesJob.start();
   /**
    * Create HTTP server.
    */
